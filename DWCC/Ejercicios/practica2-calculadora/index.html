@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de notas</title>
+  <link rel="stylesheet" href="estilos.css">
+  <script src="calculadora.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Calculadora de notas</h1>
+  </header>
+
+  <main>
+    <section class="calculadora">
+      <h2>Calcula tu nota final</h2>
+      <p>La nota se calcula con un 70 % del examen y un 30 % de la práctica.</p>
+
+      <form id="formulario" novalidate>
+        <label for="examen">Nota del examen (0-10):</label>
+        <input type="number" id="examen" min="0" max="10" step="any">
+        <small id="error-examen"></small>
+
+        <label for="practica">Nota de la práctica (0-10):</label>
+        <input type="number" id="practica" min="0" max="10" step="any">
+        <small id="error-practica"></small>
+
+        <button type="submit">Calcular</button>
+      </form>
+
+      <p id="resultado" aria-live="polite"></p>
+      <p id="nota-minima"></p>
+
+      <section class="historial">
+        <h2>Historial</h2>
+        <ul id="lista-historial"></ul>
+        <button id="borrar-historial" type="button">Borrar historial</button>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <p>Práctica 2 · DWEC</p>
+  </footer>
+</body>
+</html>
