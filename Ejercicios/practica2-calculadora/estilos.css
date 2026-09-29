@@ -1,0 +1,32 @@
+body {
+  margin: 0;
+  padding: 20px;
+  background-color: #f1f1f1;
+  color: #222;
+  font-family: Arial, sans-serif;
+}
+
+header, footer { text-align: center; }
+
+main { max-width: 550px; margin: 30px auto; }
+
+.calculadora {
+  padding: 25px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+}
+
+label, input { display: block; }
+label { margin-top: 15px; }
+input { box-sizing: border-box; width: 100%; margin-top: 5px; padding: 9px; }
+small { color: #c0392b; }
+button { margin-top: 15px; padding: 10px 16px; border: 0; border-radius: 4px; background-color: #287a50; color: white; cursor: pointer; }
+input.invalido { border: 2px solid #c0392b; }
+#resultado.aprobado { color: green; font-weight: bold; }
+#resultado.suspenso { color: red; font-weight: bold; }
+.historial { margin-top: 25px; border-top: 1px solid #ddd; }
+
+@media (max-width: 500px) {
+  .calculadora { padding: 18px; }
+}
