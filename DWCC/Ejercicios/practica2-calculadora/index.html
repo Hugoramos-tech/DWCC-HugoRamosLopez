@@ -5,43 +5,52 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calculadora de notas</title>
   <link rel="stylesheet" href="estilos.css">
+  <!-- defer: el script se ejecuta cuando el HTML ya está cargado,
+       así getElementById() encuentra los elementos de la página -->
   <script src="calculadora.js" defer></script>
 </head>
 <body>
   <header>
     <h1>Calculadora de notas</h1>
+    <p class="subtitulo">Nota final = examen &times; 0,7 + práctica &times; 0,3</p>
   </header>
 
   <main>
     <section class="calculadora">
       <h2>Calcula tu nota final</h2>
-      <p>La nota se calcula con un 70 % del examen y un 30 % de la práctica.</p>
 
       <form id="formulario" novalidate>
-        <label for="examen">Nota del examen (0-10):</label>
-        <input type="number" id="examen" min="0" max="10" step="any">
-        <small id="error-examen"></small>
+        <div class="campo">
+          <label for="examen">Nota del examen (0-10):</label>
+          <input type="number" id="examen" name="examen" min="0" max="10" step="any"
+                 inputmode="decimal" autocomplete="off" aria-describedby="error-examen">
+          <small class="error" id="error-examen" aria-live="polite"></small>
+        </div>
 
-        <label for="practica">Nota de la práctica (0-10):</label>
-        <input type="number" id="practica" min="0" max="10" step="any">
-        <small id="error-practica"></small>
+        <div class="campo">
+          <label for="practica">Nota de la práctica (0-10):</label>
+          <input type="number" id="practica" name="practica" min="0" max="10" step="any"
+                 inputmode="decimal" autocomplete="off" aria-describedby="error-practica">
+          <small class="error" id="error-practica" aria-live="polite"></small>
+        </div>
 
         <button type="submit">Calcular</button>
       </form>
 
       <p id="resultado" aria-live="polite"></p>
-      <p id="nota-minima"></p>
+      <p id="nota-minima" class="aviso"></p>
+    </section>
 
-      <section class="historial">
-        <h2>Historial</h2>
-        <ul id="lista-historial"></ul>
-        <button id="borrar-historial" type="button">Borrar historial</button>
-      </section>
+    <section class="historial">
+      <h2>Historial</h2>
+      <ul id="lista-historial"></ul>
+      <p id="historial-vacio">Todavía no hay cálculos guardados.</p>
+      <button id="borrar-historial" type="button" class="secundario">Borrar historial</button>
     </section>
   </main>
 
   <footer>
-    <p>Práctica 2 · DWEC</p>
+    <p>Hugo Ramos López &middot; MP0612 DWEC &middot; Práctica 2</p>
   </footer>
 </body>
 </html>
