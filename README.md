@@ -8,8 +8,8 @@ Prácticas del módulo **MP0612 · Desarrollo Web en Entorno Cliente** (2.º DAW
 |---|---|---|
 | 1 · Recorrido por las DevTools | [`DWCC/Ejercicios/`](DWCC/Ejercicios/) | — |
 | 2 · Calculadora de notas | [`DWCC/Ejercicios/practica2-calculadora/`](DWCC/Ejercicios/practica2-calculadora/) | Navegador (ver su README) |
-| 3 · Campeonato DAW (parte 1) | [`DWCC/Ejercicios/campeonato.js`](DWCC/Ejercicios/campeonato.js) | `node campeonato.js` |
-| 3.2 · Campeonato DAW (parte 2) | [`DWCC/Ejercicios/campeonato2.js`](DWCC/Ejercicios/campeonato2.js) | `node campeonato2.js` |
+| 3 · Campeonato DAW (parte 1) | [`DWCC/campeonato.js`](DWCC/campeonato.js) | `node campeonato.js` |
+| 3.2 · Campeonato DAW (parte 2) | [`DWCC/campeonato2.js`](DWCC/campeonato2.js) | `node campeonato2.js` |
 
 ## Otros ejercicios de clase
 
