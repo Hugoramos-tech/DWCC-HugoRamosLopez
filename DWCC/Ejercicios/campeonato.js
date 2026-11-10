@@ -1,17 +1,12 @@
-// =====================================================
-// PRÁCTICA 3 - TEMA 2 JAVASCRIPT
-// MP0612 - Desarrollo web en entorno cliente
-// Campeonato DAW: gestión de resultados de un participante
-// Ejecución: node campeonato.js
-// =====================================================
+// Práctica 3 (parte 1) - Campeonato DAW con un jugador
+// Hugo Ramos López - MP0612 Desarrollo web en entorno cliente
+// Se ejecuta con: node campeonato.js
 
-// ---------- CONSTANTES ----------
 const PUNTOS_VICTORIA = 3;
 const PUNTOS_EMPATE = 1;
 const PUNTOS_DERROTA = 0;
 
-// ---------- CREACIÓN DEL JUGADOR ----------
-// Parámetro por defecto: si no se indica nivel, empieza en 1
+// Crea el jugador. Si no se indica el nivel, empieza en 1
 function crearJugador(nombre, nivel = 1) {
   return {
     nombre: nombre,
@@ -21,10 +16,9 @@ function crearJugador(nombre, nivel = 1) {
   };
 }
 
-// ---------- RESULTADOS ----------
-// Devuelve los puntos de un resultado, o null si el resultado no existe
+// Puntos de un resultado, o null si ese resultado no existe
 function obtenerPuntosResultado(resultado) {
-  switch (resultado.toLowerCase()) {
+  switch (resultado) {
     case "victoria":
       return PUNTOS_VICTORIA;
     case "empate":
@@ -36,22 +30,22 @@ function obtenerPuntosResultado(resultado) {
   }
 }
 
-// Registra una partida. Devuelve true si se contabilizó y false si no
+// Registra una partida. Devuelve true si se ha contado y false si no
 function registrarPartida(jugador, resultado) {
   const puntos = obtenerPuntosResultado(resultado);
 
   if (puntos === null) {
-    console.log(`  [AVISO] Resultado "${resultado}" no válido. Partida no contabilizada.`);
+    console.log("  El resultado \"" + resultado + "\" no existe, no se cuenta");
     return false;
   }
 
   jugador.puntos += puntos;
   jugador.partidasJugadas++;
-  console.log(`  Partida registrada: ${resultado} (+${puntos} puntos)`);
+  console.log("  Partida registrada: " + resultado + " (+" + puntos + " puntos)");
   return true;
 }
 
-// Registra varias partidas de golpe usando rest (...resultados)
+// Registra varias partidas de golpe y devuelve cuántas se han contado
 function registrarPartidas(jugador, ...resultados) {
   let registradas = 0;
 
@@ -64,7 +58,6 @@ function registrarPartidas(jugador, ...resultados) {
   return registradas;
 }
 
-// ---------- CLASIFICACIÓN ----------
 function calcularCategoria(puntos) {
   if (puntos >= 10) {
     return "EXPERTO";
@@ -77,102 +70,87 @@ function calcularCategoria(puntos) {
   }
 }
 
-// ---------- BONIFICACIONES ----------
-// Suma una cantidad variable de bonificaciones (rest)
-const sumarBonificaciones = (...bonificaciones) => {
+// Suma una cantidad variable de bonificaciones y se las da al jugador
+function aplicarBonificaciones(jugador, ...bonificaciones) {
   let total = 0;
   for (const bonificacion of bonificaciones) {
     total += bonificacion;
   }
-  return total;
-};
 
-function aplicarBonificaciones(jugador, ...bonificaciones) {
-  const total = sumarBonificaciones(...bonificaciones);
   jugador.puntos += total;
-  console.log(`  Bonificaciones [${bonificaciones.join(", ")}] -> +${total} puntos`);
+  console.log("  Bonificaciones: +" + total + " puntos");
+  return total;
 }
 
-// ---------- OPERACIONES ESPECIALES (arrow functions) ----------
+// Operaciones especiales
 const duplicarPuntos = (jugador) => {
   jugador.puntos *= 2;
-  console.log("  Puntos duplicados.");
+  console.log("  Puntos duplicados");
 };
 
-// Parámetro por defecto: si no se indica, se añade 1 punto
 const anadirPuntosExtra = (jugador, extra = 1) => {
   jugador.puntos += extra;
-  console.log(`  Puntos extra añadidos: +${extra}`);
+  console.log("  Puntos extra: +" + extra);
 };
 
-// La puntuación nunca puede quedar por debajo de 0
+// Los puntos nunca bajan de 0
 const aplicarPenalizacion = (jugador, penalizacion = 1) => {
   jugador.puntos = Math.max(0, jugador.puntos - penalizacion);
-  console.log(`  Penalización aplicada: -${penalizacion}`);
+  console.log("  Penalización: -" + penalizacion);
 };
 
-// ---------- RESUMEN ----------
 function mostrarResumen(jugador) {
-  console.log("  ----- RESUMEN -----");
-  console.log(`  Jugador:          ${jugador.nombre}`);
-  console.log(`  Nivel:            ${jugador.nivel}`);
-  console.log(`  Partidas jugadas: ${jugador.partidasJugadas}`);
-  console.log(`  Puntos:           ${jugador.puntos}`);
-  console.log(`  Categoría:        ${calcularCategoria(jugador.puntos)}`);
-  console.log("  -------------------");
+  console.log("  Jugador: " + jugador.nombre + " (nivel " + jugador.nivel + ")");
+  console.log("  Partidas jugadas: " + jugador.partidasJugadas);
+  console.log("  Puntos: " + jugador.puntos);
+  console.log("  Categoría: " + calcularCategoria(jugador.puntos));
 }
 
-// =====================================================
-// PRUEBAS
-// =====================================================
+// ----- Pruebas -----
 
-console.log("\nPRUEBA 1: partidas sueltas (victoria, empate, derrota)");
+console.log("\n1) Victoria, empate y derrota");
 const ana = crearJugador("Ana", 2);
 registrarPartida(ana, "victoria");
 registrarPartida(ana, "empate");
 registrarPartida(ana, "derrota");
-mostrarResumen(ana); // 4 puntos, 3 partidas -> INTERMEDIO
+mostrarResumen(ana);
 
-console.log("\nPRUEBA 2: resultado inexistente (no debe contabilizarse)");
-const luis = crearJugador("Luis"); // nivel por defecto = 1
+console.log("\n2) Un resultado que no existe");
+const luis = crearJugador("Luis"); // nivel 1 por defecto
 registrarPartida(luis, "victoria");
 registrarPartida(luis, "ganada");
 registrarPartida(luis, "");
-mostrarResumen(luis); // 3 puntos, 1 partida -> PRINCIPIANTE
+mostrarResumen(luis);
 
-console.log("\nPRUEBA 3: varias partidas con rest y spread");
+console.log("\n3) Varias partidas de un array con spread");
 const resultadosMaria = ["victoria", "victoria", "empate", "derrota", "empate"];
 const maria = crearJugador("María", 3);
-const contabilizadas = registrarPartidas(maria, ...resultadosMaria); // spread
-console.log(`  Partidas contabilizadas: ${contabilizadas}`);
-mostrarResumen(maria); // 8 puntos -> AVANZADO
+console.log("  Partidas contadas: " + registrarPartidas(maria, ...resultadosMaria));
+mostrarResumen(maria);
 
-console.log("\nPRUEBA 4: bonificaciones variables (2, 1 y 3 = 6 puntos)");
+console.log("\n4) Bonificaciones");
 const pablo = crearJugador("Pablo");
 registrarPartida(pablo, "empate");
 aplicarBonificaciones(pablo, 2, 1, 3);
-mostrarResumen(pablo); // 1 + 6 = 7 puntos -> AVANZADO
-
-console.log("\nPRUEBA 5: sin bonificaciones y con spread de un array");
-aplicarBonificaciones(pablo); // 0 bonificaciones
+aplicarBonificaciones(pablo); // sin bonificaciones
 const bonosExtra = [1, 1, 1];
-aplicarBonificaciones(pablo, ...bonosExtra); // 7 + 3 = 10
-mostrarResumen(pablo); // 10 puntos -> EXPERTO
+aplicarBonificaciones(pablo, ...bonosExtra);
+mostrarResumen(pablo);
 
-console.log("\nPRUEBA 6: operaciones especiales");
-const carla = crearJugador("Carla", 1);
-registrarPartidas(carla, "victoria", "empate"); // 4 puntos
-duplicarPuntos(carla); // 8
-anadirPuntosExtra(carla); // +1 por defecto -> 9
-anadirPuntosExtra(carla, 5); // 14
-aplicarPenalizacion(carla, 4); // 10
-mostrarResumen(carla); // EXPERTO
+console.log("\n5) Operaciones especiales");
+const carla = crearJugador("Carla");
+registrarPartidas(carla, "victoria", "empate");
+duplicarPuntos(carla);
+anadirPuntosExtra(carla);
+anadirPuntosExtra(carla, 5);
+aplicarPenalizacion(carla, 4);
+mostrarResumen(carla);
 
-console.log("\nPRUEBA 7: la penalización no deja puntos negativos");
+console.log("\n6) La penalización no deja puntos negativos");
 aplicarPenalizacion(luis, 100);
-mostrarResumen(luis); // 0 puntos -> PRINCIPIANTE
+mostrarResumen(luis);
 
-console.log("\nPRUEBA 8: límites de las categorías");
+console.log("\n7) Límites de las categorías");
 for (const puntos of [0, 3, 4, 6, 7, 9, 10, 25]) {
-  console.log(`  ${puntos} puntos -> ${calcularCategoria(puntos)}`);
+  console.log("  " + puntos + " puntos -> " + calcularCategoria(puntos));
 }

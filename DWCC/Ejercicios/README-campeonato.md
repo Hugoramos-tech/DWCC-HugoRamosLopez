@@ -1,8 +1,8 @@
 # Práctica 3 — Campeonato DAW
 
-**Hugo Ramos López** · MP0612 Desarrollo Web en Entorno Cliente · Tema 2
+Hugo Ramos López · MP0612 Desarrollo Web en Entorno Cliente · Tema 2
 
-Dos programas de consola. Se ejecutan con Node:
+Son dos programas de consola. Se ejecutan con Node:
 
 ```bash
 node campeonato.js
@@ -11,28 +11,26 @@ node campeonato2.js
 
 ## Parte 1 — `campeonato.js`
 
-Gestiona los resultados de **un** participante. Victoria 3 puntos, empate 1 y derrota 0.
-Un resultado que no existe se detecta y no se contabiliza.
+Lleva los resultados de **un** jugador. Victoria 3 puntos, empate 1 y derrota 0. Si el resultado
+no existe, avisa y no lo cuenta.
 
-Categorías: 0–3 PRINCIPIANTE · 4–6 INTERMEDIO · 7–9 AVANZADO · 10 o más EXPERTO.
+Categorías: 0–3 PRINCIPIANTE, 4–6 INTERMEDIO, 7–9 AVANZADO y 10 o más EXPERTO.
 
-Contenidos usados: `let`/`const`, operadores, `if`/`else` y `switch`, bucle `for...of`,
-funciones con parámetros, `return` y parámetros por defecto, arrow functions, rest y spread.
-
-Ocho pruebas al final del fichero, incluidas las de resultado inexistente, penalización que no
-deja puntos negativos y las fronteras de las cuatro categorías.
+He usado `const` y `let`, operadores, `if`/`else`, `switch`, `for...of`, funciones con
+parámetros por defecto, arrow functions, y rest y spread en las bonificaciones y en
+`registrarPartidas`.
 
 ## Parte 2 — `campeonato2.js`
 
 Amplía el programa a **varios** jugadores con objetos y arrays. Los puntos de cada resultado
-están en el objeto `PUNTOS_RESULTADO`, en lugar de en un `switch`.
+están en el objeto `PUNTOS_RESULTADO`, así no hace falta el `switch`.
 
 Cada jugador se crea con `crearJugador(nombre, curso = "2.º DAW")` y tiene los métodos
 `registrarPartida`, `aplicarBonificaciones`, `contar`, `puntos`, `categoria` y `resumen`.
 
 Funciones del campeonato: `buscarJugador`, `clasificacion`, `jugadoresPorCategoria`,
-`estadisticas`, `invictos` y `mostrarClasificacion`.
-Operaciones especiales: `aplicarOperacion`, `copiarJugador` y `unirCampeonatos`.
+`estadisticas`, `invictos` y `mostrarClasificacion`. Operaciones especiales: `aplicarOperacion`,
+`copiarJugador` y `unirCampeonatos`.
 
 ### Resultados de los seis participantes
 
@@ -45,16 +43,15 @@ Operaciones especiales: `aplicarOperacion`, `copiarJugador` y `unirCampeonatos`.
 | Eva | D D E + bonif. 1 y 1 | 3 | PRINCIPIANTE |
 | Fran | V E D + bonif. 3 | 7 | AVANZADO |
 
-Totales: 25 partidas (10 victorias, 10 empates, 5 derrotas) y una media de 7,83 puntos.
-Invictos: Carla y Diego.
+En total son 25 partidas (10 victorias, 10 empates y 5 derrotas) y la media sale 7,83 puntos.
+Los invictos son Carla y Diego.
 
-### Casos especiales que se prueban
+### Casos especiales que pruebo
 
-- Un resultado que no existe (`registrarPartida("ganada")` devuelve `false` y no suma partida).
-- **Empate a puntos:** Carla y Diego empatan a 10 y va primero Carla por tener más victorias.
-  Con Adela y Eva, empatadas a 3 puntos y a victorias, se ordenan alfabéticamente.
-- **Una copia que no afecta al original:** `copiarJugador` duplica también los dos arrays con
-  spread, así que registrar partidas en la copia deja al original intacto.
-- `clasificacion` trabaja sobre `[...lista]`, por lo que el array recibido no cambia de orden.
-- Listas vacías en `estadisticas` y `jugadoresPorCategoria` (las cuatro categorías aparecen
+- Un resultado que no existe: `registrarPartida("ganada")` devuelve `false` y no suma partida.
+- Empate a puntos: Carla y Diego tienen 10 puntos y va primera Carla porque tiene más
+  victorias. Adela y Eva empatan a puntos y a victorias, así que se ordenan alfabéticamente.
+- Una copia no cambia al original: `copiarJugador` copia también los dos arrays con spread.
+- `clasificacion` ordena sobre `[...lista]`, así que el array que recibe no cambia de orden.
+- Listas vacías en `estadisticas` y `jugadoresPorCategoria` (las cuatro categorías salen
   siempre, aunque estén vacías).
